@@ -85,29 +85,34 @@ export const getCategoriesAndDocuments = async () => {
 
 
 // 创建collection ==> for users
-export const createUserDocumentFromAuth = async (userAuth,additionalInformation={}) => {
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  additionalInformation = {}
+) => {
+  if (!userAuth) return;
 
-  const userDocRef = doc(db,"user",userAuth.uid)
-  const userSnapShot = await getDoc(userDocRef)
-  // userSnapShot.exists 可以检查是否存在
+  const userDocRef = doc(db, 'users', userAuth.uid);
 
-  if(!userSnapShot.exists()){
-    const {displayName, email} = userAuth;
-    const createAt = new Date();
-    try{
-      await setDoc(userDocRef,{
+  const userSnapshot = await getDoc(userDocRef);
+
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await setDoc(userDocRef, {
         displayName,
         email,
-        createAt,
-        ...additionalInformation
-      })
-    }catch (error){
-      console.log("error creating the user",error.message);
+        createdAt,
+        ...additionalInformation,
+      });
+    } catch (error) {
+      console.log('error creating the user', error.message);
     }
   }
 
-  return userDocRef;
-}
+  return userSnapshot;
+};
 
 // 通过账号密码创建用户
 export const createAuthUserWithEmailAndPassword = async (email,password) => {
@@ -130,6 +135,19 @@ export const signOutUser = async () => await signOut(auth)
 // 添加监听
 export const onAuthStateChangedListener = (callback) => {
   onAuthStateChanged(auth,callback)
+}
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth)
+      },
+      reject
+    )
+  })
 }
 
 

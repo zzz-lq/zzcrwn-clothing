@@ -2,7 +2,7 @@ import { Routes,Route } from "react-router-dom"
 import CategoriesPreview from "../../component/categories-preview/categories-preview.component"
 import Categoty from "../../component/category/category.component"
 // import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils"
-import {fetchCategoriesAsync} from "../../store/categories/category.action"
+import {fetchCategoriesStart} from "../../store/categories/category.action"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 
@@ -11,7 +11,7 @@ const Shop = () => {
   const dispath = useDispatch()
 
   useEffect(() => {
-    dispath(fetchCategoriesAsync())
+    dispath(fetchCategoriesStart())
   },[])
 
   return(

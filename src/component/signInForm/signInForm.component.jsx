@@ -1,9 +1,10 @@
 import { useState } from "react"
-import { createUserDocumentFromAuth,signInWithGooglePopup,signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils"
+import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils"
 import InputForm from "../inputForm/inputForm"
 import "./signInForm.style.scss"
 import Button, { BUTTON_TYPE_CLASSES } from "../button/Button.component"
-
+import { useDispatch } from "react-redux"
+import { googleSignInStart,emailSignInStart } from "../../store/user/user.action"
 
 const initialForm = {
   email:"",
@@ -12,7 +13,7 @@ const initialForm = {
 const SighInForm = () => {
 
   // const {setCurrentUser} = useContext(UserContext)
-
+  const dispatch = useDispatch()
   const [formData,setFormData] = useState(initialForm)
   const {email,password} = formData
 
@@ -31,7 +32,8 @@ const SighInForm = () => {
     e.preventDefault()
     
     try{
-      const response = await signInAuthUserWithEmailAndPassword(email,password)
+      // const response = await signInAuthUserWithEmailAndPassword(email,password)
+      dispatch(emailSignInStart(email,password))
       // setCurrentUser(response.user)
       // console.log(response.user)
       resetValue()
@@ -41,8 +43,8 @@ const SighInForm = () => {
   }
 
   const logGoogleUser = async () => {
-
-    const {user} = await signInWithGooglePopup();
+    dispatch(googleSignInStart())
+    // const {user} = await signInWithGooglePopup();
     // console.log(response) //可以获取到accessToken
     // createUserDocumentFromAuth(user)
     // setCurrentUser(user)

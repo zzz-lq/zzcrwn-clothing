@@ -1,10 +1,12 @@
 import { useState } from "react"
-import { createAuthUserWithEmailAndPassword,createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils"
+// import { createAuthUserWithEmailAndPassword,createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils"
 import InputForm from "../inputForm/inputForm"
 import "./signUpForm.style.scss"
 import Button from "../button/Button.component"
 import { BUTTON_TYPE_CLASSES } from "../button/Button.component"
 // import { UserContext } from "../../contexts/user.context"
+import { useDispatch } from "react-redux"
+import { signUpStart } from "../../store/user/user.action"
 
 const initialForm = {
   displayName:"",
@@ -14,6 +16,7 @@ const initialForm = {
 }
 const SighUpForm = () => {
 
+  const dispatch = useDispatch()
   const [formData,setFormData] = useState(initialForm)
   const {displayName,email,password,confirmPassword} = formData
   // const {setCurrentUser} = useContext(UserContext)
@@ -36,8 +39,9 @@ const SighUpForm = () => {
       return;
     }
     try{
-      const response = await createAuthUserWithEmailAndPassword(email,password)
-      await createUserDocumentFromAuth(response.user,{displayName})
+      dispatch(signUpStart(email,password,dispatch))
+      // const response = await createAuthUserWithEmailAndPassword(email,password)
+      // await createUserDocumentFromAuth(response.user,{displayName})
       // setCurrentUser(response.user)
       resetValue()
     }catch(error){
