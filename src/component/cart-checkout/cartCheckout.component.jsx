@@ -4,6 +4,8 @@ import "./cartCheckout.style.scss"
 import CheckoutItem from "../cart-checkout-item/cart-checkout-item.component"
 import { useSelector } from "react-redux"
 import { selectCartItems,selectCartTotalPrice } from "../../store/cart/cart.selector"
+import PaymentForm from "../payment-form/payment-form.component"
+
 const CartCheckout = () => {
 
   // const {cartItems,totalPrice} = useContext(CartContext)
@@ -27,6 +29,7 @@ const CartCheckout = () => {
         })
       }
       <div className="total">total price: ${totalPrice}</div>
+      <PaymentForm />
     </div>
   )
 }
