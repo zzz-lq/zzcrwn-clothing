@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {BaseStyle} from './index.styles';
 import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import MyRoute from './route/route.component';
 // import { UserProvider } from './contexts/user.context';
 // import { CategoriesProvider } from './contexts/categories.context';
 // import { CartProvider } from './contexts/cart.context';
+import { GlobalStyle } from './index.styles';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -22,9 +22,8 @@ root.render(
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Elements stripe={stripePromise}>
-            <BaseStyle>
-              <MyRoute />
-            </BaseStyle>
+            <GlobalStyle />
+            <MyRoute />
           </Elements>
         </BrowserRouter>
       </PersistGate>

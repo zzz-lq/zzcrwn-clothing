@@ -21,6 +21,13 @@ export const ProductCardContainer = styled.div`{
     position: absolute;
     top: 255px;
     display: none;
+
+    @media screen and (max-width: 800px) {
+      opacity: 0.9;
+      min-width: unset;
+      padding: 0 10px 0 10px;
+      font-size: 10px;
+    }
   }
 
   &:hover {
@@ -33,6 +40,7 @@ export const ProductCardContainer = styled.div`{
       display: flex;
     }
   }
+
 `
 export const Footer = styled.div`{
     width: 100%;

@@ -5,10 +5,8 @@ import Authentication from "../component/authentication/authentication.component
 import Shop from "./shop/shop.component"
 import CartCheckout from "../component/cart-checkout/cartCheckout.component"
 import {useEffect } from "react"
-import { getCurrentUser} from "../utils/firebase/firebase.utils"
 import { useDispatch } from "react-redux"
 import { checkUserSession } from "../store/user/user.action"
-
 
 const MyRoute  = () => {
   const dispath = useDispatch()
@@ -31,7 +29,9 @@ const MyRoute  = () => {
 
 
   return(
+    
     <Routes>
+      
       <Route path="/" element={<Navigation />}>
         <Route index element={<App />} />
         <Route path="shop/*" element={<Shop />}>
